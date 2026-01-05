@@ -1,0 +1,77 @@
+.field {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../assets/field.png');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-stack {
+    position: relative;
+
+    img {
+        position: absolute;
+        width: 120px;
+    }
+}
+
+.top-card {
+    cursor: pointer;
+    transition: all 125ms ease-in-out;
+
+    &:hover {
+        transform: translateY(-10px);
+        transition: transform 0.2s;
+    }
+}
+
+.played-card {
+    right: 25px;
+    transform: scale(1.3) translateX(140px) translateY(-180px) rotate(-10deg);
+}
+
+.pick-card {
+    animation: pick-card-animation 1s ease-in-out;
+    transform: scale(1.3) translateX(140px) translateY(-180px) rotate(-10deg);
+}
+
+@keyframes pick-card-animation {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.7);
+    }
+
+    60% {
+        transform: scale(1.7);
+    }
+    100% {
+        transform: scale(1.3) translateX(140px) translateY(-180px) rotate(-10deg);
+    }
+}
+
+.player-position {
+    position: absolute;
+    right: 0;
+}
+
+.btn-add{
+    position: absolute;
+    bottom: 32px !important;
+    right: 32px;
+    background-color: rgb(44, 138, 173);
+    color: white;
+    border-radius: 100px !important;
+}
+
+.pin-bottom{
+    position: absolute;
+    bottom: 32px;
+    left: 100px;
+    right: 100px;
+    border-radius: 10px;
+    background-color: white;
+}
