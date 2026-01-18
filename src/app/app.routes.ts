@@ -5,6 +5,6 @@ import { GameDescriptionComponent } from './game-description/game-description.co
 
 export const routes: Routes = [
   { path: '', component: StartScreenComponent },
-  { path: 'game', component: GameComponent },
+  { path: 'game/:id', component: GameComponent },
   { path: 'game-description', component: GameDescriptionComponent }
 ];
