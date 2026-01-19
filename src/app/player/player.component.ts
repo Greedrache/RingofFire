@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './player.component.html',
-  styleUrl: './player.component.scss'
+  styleUrls: ['./player.component.scss']
 })
 
 

@@ -15,12 +15,13 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, GameDescriptionComponent],
   templateUrl: './game.component.html',
-  styleUrl: './game.component.scss'
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
   pickCardAnimation: boolean = false;
   currentCard: string = '';
   game: Game;
+  currentGameId: string | null = null;
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) {
     this.game = new Game();
@@ -30,16 +31,19 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.route.params.subscribe(params => {
       const gameId = params['id'];
+      this.currentGameId = gameId;
       console.log('Game ID from route:', gameId);
-      this.firestore.collection('games')
+      this.firestore.collection('games') // wenn player timmy auf firebase dann muss er auf spiel sein
       .doc(gameId)
       .valueChanges()
       .subscribe((game: any) => {
         console.log('Game update', game);
-        this.game.currentPlayerIndex = this.game.currentPlayerIndex;
-        this.game.playedCards = this.game.playedCards;
-        this.game.players = this.game.players;
-        this.game.stack = this.game.stack;
+        if (game) {
+          this.game.players = game.players || [];
+          this.game.currentPlayerIndex = game.currentPlayerIndex ?? 0;
+          this.game.playedCards = game.playedCards || [];
+          this.game.stack = game.stack || this.game.stack;
+        }
       });
     });
   }
@@ -70,6 +74,13 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        if (this.currentGameId) {
+          this.firestore.collection('games').doc(this.currentGameId).update({ players: this.game.players })
+            .then(() => console.log('Player added to firestore'))
+            .catch(err => console.error('Error updating players in firestore', err));
+        } else {
+          console.warn('No currentGameId - player only added locally');
+        }
       }
     });
   }

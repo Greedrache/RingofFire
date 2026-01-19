@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, FormsModule, MatDialogModule, MatButtonModule],
   templateUrl: './dialog-add-player.component.html',
-  styleUrl: './dialog-add-player.component.scss'
+  styleUrls: ['./dialog-add-player.component.scss']
 })
 export class DialogAddPlayerComponent {
 
