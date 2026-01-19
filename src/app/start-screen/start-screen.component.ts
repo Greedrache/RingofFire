@@ -1,22 +1,30 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { Game } from '../../models/game';
 
 @Component({
   selector: 'app-start-screen',
   standalone: true,
   imports: [],
   templateUrl: './start-screen.component.html',
-  styleUrl: './start-screen.component.scss'
+  styleUrls: ['./start-screen.component.scss']
 })
 export class StartScreenComponent {
-  constructor(private router: Router) { } 
+  constructor(private firestore: AngularFirestore, private router: Router) { }
 
   ngOnInit(): void {
   }
 
 
   newGame() {
-    this.router.navigateByUrl('/game');
+    let game = new Game();
+    this.firestore.collection('games').add(Object.assign({}, game)).then((docRef) => {
+      console.log('New game created with ID: ', docRef.id);
+      this.router.navigateByUrl(`/game/${docRef.id}`);
+    }).catch(err => {
+      console.error('Error creating new game', err);
+    });
   }
 
 

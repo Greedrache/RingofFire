@@ -50,9 +50,7 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-   // this.firestore.collection('games').add(Object.assign({}, this.game)).then((docRef) => {
-     // console.log('New game created with ID: ', docRef.id);
-   // });
+
   }
 
   takeCard() {
